@@ -83,12 +83,18 @@ const handleConfirmSeat = (event) => {
     method: "POST",
     body: JSON.stringify({
       givenName: document.getElementById("givenName").value,
+      surname: document.getElementById("surname").value,
+      email: document.getElementById("email").value,
+      seat: selection,
+      flight: flightInput.value,
     }),
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-  });
+  })
+    .then((response) => JSON.parse(response))
+    .then((window.location = "../confirmed"));
 };
 
 flightInput.addEventListener("blur", toggleFormContent);
