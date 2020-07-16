@@ -5,38 +5,52 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const { flights } = require("./test-data/flightSeating");
 const { reservations } = require("./test-data/reservations");
-let reservationCounter = 1;
+const request = require("request-promise");
 
 const handleFlight = (req, res) => {
   const { flightNumber } = req.params;
-  // get all flight numbers
-  const allFlights = Object.keys(flights);
-  // is flightNumber in the array?
-  console.log("REAL FLIGHT: ", allFlights.includes(flightNumber));
-  res.status(200).send(flights[flightNumber]);
+  const options = {
+    uri: `https://journeyedu.herokuapp.com/slingair/flights/${flightNumber}`,
+    headers: {
+      "User-Agent": "Request-Promise",
+    },
+    json: true, // Automatically parses the JSON string in the response
+  };
+  request(options).then((response) =>
+    res.status(200).send(response[flightNumber])
+  );
 };
 const handleUser = (req, res) => {
   let newReservation = req.body;
-  reservationCounter++;
-  newReservation.id = reservationCounter;
-  reservations.push(newReservation);
-  res.status(201).send(newReservation);
+  const options = {
+    method: "POST",
+    uri: "https://journeyedu.herokuapp.com/slingair/users",
+    body: newReservation,
+    json: true, // Automatically parses the JSON string in the response
+  };
+  request(options).then((response) =>
+    res.status(201).json(response.reservation)
+  );
 };
 const handleConfirmation = (req, res) => {
-  const user =
-    reservations[
-      reservations.findIndex((element) => element.id == req.params.userId)
-    ];
-  res.status(200).json({
-    flight: user.flight,
-    seat: user.seat,
-    name: user.givenName + " " + user.surname,
-    email: user.email,
-  });
+  const options = {
+    uri: `https://journeyedu.herokuapp.com/slingair/users/${req.params.userId}`,
+    headers: {
+      "User-Agent": "Request-Promise",
+    },
+    json: true, // Automatically parses the JSON string in the response
+  };
+  request(options).then((response) => res.status(200).json(response.data));
 };
 const handleFlightList = (req, res) => {
-  const allFlights = Object.keys(flights);
-  res.status(200).json(allFlights);
+  const options = {
+    uri: "https://journeyedu.herokuapp.com/slingair/flights",
+    headers: {
+      "User-Agent": "Request-Promise",
+    },
+    json: true, // Automatically parses the JSON string in the response
+  };
+  request(options).then((response) => res.status(200).json(response.flights));
 };
 
 express()

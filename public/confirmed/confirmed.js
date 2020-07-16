@@ -6,7 +6,8 @@ const loadInfo = () => {
     .then((data) => {
       document.getElementById("flight").innerText = data.flight;
       document.getElementById("seat").innerText = data.seat;
-      document.getElementById("name").innerText = data.name;
+      document.getElementById("name").innerText =
+        data.givenName + " " + data.surname;
       document.getElementById("email").innerText = data.email;
     });
 };

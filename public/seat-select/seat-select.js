@@ -6,7 +6,7 @@ let selection = "";
 
 const renderSeats = (seatData) => {
   document.querySelector(".form-container").style.display = "block";
-
+  seatsDiv.innerHTML = " ";
   const alpha = ["A", "B", "C", "D", "E", "F"];
   for (let r = 1; r < 11; r++) {
     const row = document.createElement("ol");
