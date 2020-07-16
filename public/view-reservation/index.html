@@ -11,8 +11,13 @@
             <header class='header'>
                 <h1 class='header-logo'>Air Slingshot</h1>
             </div>
+            <h2>Find your reservation!</h2>
             <div class="content">
-
+                <form onsubmit="reservationRedirect()">
+                    <label for="bookingId">Booking ID :</label>
+                <input name="bookingId" id="bookingId" class="bookingId reservation" type="text" placeholder="Booking ID#" required />
+                <button class="button confirm reservation" type="submit">Find my reservation</button>
+                </form>
             </div>
         </div>
         <p class='footer-logo'>The only way to fly!</p>

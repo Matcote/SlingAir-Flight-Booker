@@ -4,7 +4,6 @@ const loadInfo = () => {
   fetch(`/confirmation/${userId}`)
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
       document.getElementById("flight").innerText = data.flight;
       document.getElementById("seat").innerText = data.seat;
       document.getElementById("name").innerText = data.name;
