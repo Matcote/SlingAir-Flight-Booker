@@ -93,8 +93,11 @@ const handleConfirmSeat = (event) => {
       "Content-Type": "application/json",
     },
   })
-    .then((response) => JSON.parse(response))
-    .then((window.location = "../confirmed"));
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      window.location = `../confirmed?id=${data.id}`;
+    });
 };
 
 flightInput.addEventListener("blur", toggleFormContent);

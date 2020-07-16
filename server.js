@@ -20,12 +20,12 @@ const handleUser = (req, res) => {
   reservationCounter++;
   newReservation.id = reservationCounter;
   reservations.push(newReservation);
-  res.status(201).send("okay boss");
+  res.status(201).send(newReservation);
 };
 const handleConfirmation = (req, res) => {
   const user =
     reservations[
-      reservations.findIndex((element) => element.id === reservationCounter)
+      reservations.findIndex((element) => element.id === req.params.userId)
     ];
   res.status(200).json({
     flight: user.flight,
@@ -52,6 +52,6 @@ express()
   // endpoints
   .get("/flights/:flightNumber", handleFlight)
   .post("/users", handleUser)
-  .get("/confirmation", handleConfirmation)
+  .get("/confirmation/:userId", handleConfirmation)
   .use((req, res) => res.send("Not Found"))
   .listen(8000, () => console.log(`Listening on port 8000`));
