@@ -100,4 +100,18 @@ const handleConfirmSeat = (event) => {
     });
 };
 
+const dropdown = () => {
+  fetch("/flights")
+    .then((response) => response.json())
+    .then((data) => {
+      data.forEach((string) => {
+        const newOption = document.createElement("option");
+        newOption.value = string;
+        newOption.innerText = string;
+        flightInput.appendChild(newOption);
+      });
+    });
+};
+dropdown();
+
 flightInput.addEventListener("blur", toggleFormContent);

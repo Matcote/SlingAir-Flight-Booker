@@ -1,14 +1,10 @@
 const loadInfo = () => {
   const url = new URL(window.location);
   const userId = url.searchParams.get("id");
-  console.log(userId);
   fetch(`/confirmation/${userId}`)
-    .then((response) => {
-      console.log(response);
-      return response.json();
-    })
+    .then((response) => response.json())
     .then((data) => {
-      console.log("DATA: ", data);
+      console.log(data);
       document.getElementById("flight").innerText = data.flight;
       document.getElementById("seat").innerText = data.seat;
       document.getElementById("name").innerText = data.name;

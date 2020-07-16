@@ -25,7 +25,7 @@ const handleUser = (req, res) => {
 const handleConfirmation = (req, res) => {
   const user =
     reservations[
-      reservations.findIndex((element) => element.id === req.params.userId)
+      reservations.findIndex((element) => element.id == req.params.userId)
     ];
   res.status(200).json({
     flight: user.flight,
@@ -33,6 +33,10 @@ const handleConfirmation = (req, res) => {
     name: user.givenName + " " + user.surname,
     email: user.email,
   });
+};
+const handleFlightList = (req, res) => {
+  const allFlights = Object.keys(flights);
+  res.status(200).json(allFlights);
 };
 
 express()
@@ -50,6 +54,7 @@ express()
   .use(express.urlencoded({ extended: false }))
 
   // endpoints
+  .get("/flights", handleFlightList)
   .get("/flights/:flightNumber", handleFlight)
   .post("/users", handleUser)
   .get("/confirmation/:userId", handleConfirmation)
