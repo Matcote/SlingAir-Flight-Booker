@@ -16,9 +16,11 @@ const handleFlight = (req, res) => {
     },
     json: true, // Automatically parses the JSON string in the response
   };
-  request(options).then((response) =>
-    res.status(200).send(response[flightNumber])
-  );
+  request(options)
+    .then((response) => res.status(200).send(response[flightNumber]))
+    .catch((err) => {
+      return err.error ? JSON.parse(err.error) : err;
+    });
 };
 const handleUser = (req, res) => {
   let newReservation = req.body;
@@ -28,9 +30,11 @@ const handleUser = (req, res) => {
     body: newReservation,
     json: true, // Automatically parses the JSON string in the response
   };
-  request(options).then((response) =>
-    res.status(201).json(response.reservation)
-  );
+  request(options)
+    .then((response) => res.status(201).json(response.reservation))
+    .catch((err) => {
+      return err.error ? JSON.parse(err.error) : err;
+    });
 };
 const handleConfirmation = (req, res) => {
   const options = {
@@ -40,7 +44,11 @@ const handleConfirmation = (req, res) => {
     },
     json: true, // Automatically parses the JSON string in the response
   };
-  request(options).then((response) => res.status(200).json(response.data));
+  request(options)
+    .then((response) => res.status(200).json(response.data))
+    .catch((err) => {
+      return err.error ? JSON.parse(err.error) : err;
+    });
 };
 const handleFlightList = (req, res) => {
   const options = {
@@ -50,7 +58,11 @@ const handleFlightList = (req, res) => {
     },
     json: true, // Automatically parses the JSON string in the response
   };
-  request(options).then((response) => res.status(200).json(response.flights));
+  request(options)
+    .then((response) => res.status(200).json(response.flights))
+    .catch((err) => {
+      return err.error ? JSON.parse(err.error) : err;
+    });
 };
 
 express()

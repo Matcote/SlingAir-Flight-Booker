@@ -97,6 +97,9 @@ const handleConfirmSeat = (event) => {
     .then((data) => {
       console.log(data);
       window.location = `../confirmed?id=${data.id}`;
+    })
+    .catch((err) => {
+      return err.error ? JSON.parse(err.error) : err;
     });
 };
 
@@ -104,14 +107,17 @@ const dropdown = () => {
   fetch("/flights")
     .then((response) => response.json())
     .then((data) => {
-      data.forEach((string) => {
-        const newOption = document.createElement("option");
-        newOption.value = string;
-        newOption.innerText = string;
-        flightInput.appendChild(newOption);
-      });
+      data
+        .forEach((string) => {
+          const newOption = document.createElement("option");
+          newOption.value = string;
+          newOption.innerText = string;
+          flightInput.appendChild(newOption);
+        })
+        .catch((err) => {
+          return err.error ? JSON.parse(err.error) : err;
+        });
+      toggleFormContent();
     });
 };
 dropdown();
-
-flightInput.addEventListener("blur", toggleFormContent);

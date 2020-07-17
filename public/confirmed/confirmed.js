@@ -9,6 +9,9 @@ const loadInfo = () => {
       document.getElementById("name").innerText =
         data.givenName + " " + data.surname;
       document.getElementById("email").innerText = data.email;
+    })
+    .catch((err) => {
+      return err.error ? JSON.parse(err.error) : err;
     });
 };
 
