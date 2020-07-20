@@ -31,9 +31,12 @@ const handleUser = (req, res) => {
     json: true, // Automatically parses the JSON string in the response
   };
   request(options)
-    .then((response) => res.status(201).json(response.reservation))
+    .then((response) => {
+      console.log(response);
+      res.status(201).json(response.reservation)})
     .catch((err) => {
-      return err.error ? JSON.parse(err.error) : err;
+      console.log(err.error);
+      res.status(400).json(err.error)
     });
 };
 const handleConfirmation = (req, res) => {
@@ -47,7 +50,7 @@ const handleConfirmation = (req, res) => {
   request(options)
     .then((response) => res.status(200).json(response.data))
     .catch((err) => {
-      return err.error ? JSON.parse(err.error) : err;
+      console.log(err)
     });
 };
 const handleFlightList = (req, res) => {

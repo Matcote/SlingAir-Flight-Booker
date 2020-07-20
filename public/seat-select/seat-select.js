@@ -69,11 +69,6 @@ const toggleFormContent = (event) => {
   } else {
     console.log('Error: required format "SA###"');
   }
-  // TODO: contact the server to get the seating availability
-  //      - only contact the server if the flight number is this format 'SA###'.
-  //      - Do I need to create an error message if the number is not valid?
-
-  // TODO: Pass the response data to renderSeats to create the appropriate seat-type.
 };
 
 const handleConfirmSeat = (event) => {
@@ -95,11 +90,14 @@ const handleConfirmSeat = (event) => {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
-      window.location = `../confirmed?id=${data.id}`;
+      if(data.id !== undefined){
+        window.location = `../confirmed?id=${data.id}`;
+      }else {
+        window.alert(data.message)
+      }
     })
     .catch((err) => {
-      return err.error ? JSON.parse(err.error) : err;
+      console.log(err)
     });
 };
 
@@ -114,9 +112,6 @@ const dropdown = () => {
           newOption.innerText = string;
           flightInput.appendChild(newOption);
         })
-        .catch((err) => {
-          return err.error ? JSON.parse(err.error) : err;
-        });
       toggleFormContent();
     });
 };

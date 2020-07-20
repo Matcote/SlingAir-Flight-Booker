@@ -11,7 +11,7 @@ const loadInfo = () => {
       document.getElementById("email").innerText = data.email;
     })
     .catch((err) => {
-      return err.error ? JSON.parse(err.error) : err;
+      console.log(err)
     });
 };
 
